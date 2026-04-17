@@ -1,20 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { View, Button } from 'react-native';
+import { useState } from 'react';
+import { CarrinhoProvider } from './context/CarrinhoContext';
+import ProdutosScreen from './screens/ProdutosScreen';
+import CarrinhoScreen from './context/CarrinhoScreen';
 
 export default function App() {
+  const [tela, setTela] = useState('produtos');
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <CarrinhoProvider>
+      <View style={{ flex: 1 }}>
+        
+        {tela === 'produtos' ? <ProdutosScreen /> : <CarrinhoScreen />}
+
+        <View style={{ flexDirection: 'row', justifyContent: 'space-around', padding: 10 }}>
+          <Button title="Produtos" onPress={() => setTela('produtos')} />
+          <Button title="Carrinho" onPress={() => setTela('carrinho')} />
+        </View>
+
+      </View>
+    </CarrinhoProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
